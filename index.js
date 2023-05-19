@@ -38,12 +38,29 @@ async function run() {
             res.send(result)
         })
 
+        
+
         app.get('/category/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
             const result = await categoryCollection.findOne(query);
             res.send(result)
         })
+
+        // bookings
+
+        app.get('/bookings', async (req, res) => {
+            const result = await bookingCollection.find().toArray();
+            res.send(result)
+        })
+        
+
+        app.post('/bookings', async (req, res) => {
+            const bookings = req.body;
+            console.log(bookings);
+            const result = await bookingCollection.insertOne(bookings)
+            res.send(result)
+        });
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
