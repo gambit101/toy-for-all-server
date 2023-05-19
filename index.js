@@ -38,7 +38,7 @@ async function run() {
             res.send(result)
         })
 
-        
+
 
         app.get('/category/:id', async (req, res) => {
             const id = req.params.id;
@@ -50,17 +50,36 @@ async function run() {
         // bookings
 
         app.get('/bookings', async (req, res) => {
+
             const result = await bookingCollection.find().toArray();
             res.send(result)
         })
-        
+
+
+        app.get('/booking', async (req, res) => {
+            console.log(req.query);
+            let query = {};
+            if (req.query?.email) {
+                query = { email: req.query.email }
+            }
+            const result = await bookingCollection.find(query).toArray();
+            res.send(result);
+        })
+
 
         app.post('/bookings', async (req, res) => {
             const bookings = req.body;
             console.log(bookings);
             const result = await bookingCollection.insertOne(bookings)
-            res.send(result)
+            res.send(result);
         });
+
+        app.delete('/booking/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await bookingCollection.deleteOne(query);
+            res.send(result)
+        })
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
