@@ -32,6 +32,8 @@ async function run() {
         const categoryCollection = client.db('toyStore').collection('category');
         const bookingCollection = client.db('toyStore').collection('bookings')
 
+        // category 
+
         app.get('/category', async (req, res) => {
             const cursor = categoryCollection.find()
             const result = await cursor.toArray()
