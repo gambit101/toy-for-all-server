@@ -37,7 +37,7 @@ async function run() {
         app.get('/category', async (req, res) => {
             const cursor = categoryCollection.find()
             const result = await cursor.toArray()
-            res.send(result)
+            res.send(result);
         })
 
 
